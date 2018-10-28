@@ -85,9 +85,9 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
+    var f = 1
     var f1 = 1
     var f2 = 1
-    var f = 1
     for (i in 3..n) {
         f = f1 + f2
         f2 = f1
@@ -103,9 +103,9 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    val pr = m * n
     var x = m
     var y = n
+    val pr = m * n
     while (x != y)
         if (x > y) x -= y else
             y -= x
@@ -118,11 +118,11 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var l = 2
-    while (n % l != 0)
-        l++
+    var K = 2
+    while (n % K != 0)
+        K++
 
-    return l
+    return K
 }
 
 /**
@@ -131,10 +131,10 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    var l = n - 1
-    while (n % l != 0)
-        l--
-    return l
+    var K = n - 1
+    while (n % K != 0)
+        K--
+    return K
 
 }
 
@@ -157,7 +157,6 @@ fun isCoPrime(m: Int, n: Int): Boolean = TODO()
 fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
 
 
-
 /**
  * Средняя
  *
@@ -174,7 +173,20 @@ fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var ch = 0
+    var k = x
+    while (k != 1) {
+        if (k % 2 == 0) {
+            k /= 2
+            ch++
+        } else {
+            k = 3 * k + 1
+            ch++
+        }
+    }
+    return ch
+}
 
 /**
  * Средняя
@@ -201,7 +213,21 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    var z = 0
+    var ch = n
+    var N = n
+    var h = 0
+    while (ch != 0) {
+        ch /= 10
+        z++
+    }
+    for (i in z downTo 1) {
+        h = (N % 10 * Math.pow(10.0, i.toDouble()) + h).toInt()
+        N /= 10
+    }
+    return h / 10
+}
 
 /**
  * Средняя

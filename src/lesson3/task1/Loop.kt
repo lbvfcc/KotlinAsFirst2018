@@ -3,6 +3,7 @@
 package lesson3.task1
 
 import lesson1.task1.sqr
+import kotlin.math.abs
 import kotlin.math.sqrt
 
 /**
@@ -69,12 +70,14 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun digitNumber(n: Int): Int {
-    var ch = n
+    var ch = abs(n)
     var count = 0
     do {
         count++
         ch /= 10
     } while (ch > 0)
+
+
     return count
 }
 
@@ -118,11 +121,11 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var K = 2
-    while (n % K != 0)
-        K++
+    var k = 2
+    while (n % k != 0)
+        k++
 
-    return K
+    return k
 }
 
 /**
@@ -131,10 +134,10 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    var K = n - 1
-    while (n % K != 0)
-        K--
-    return K
+    var k = n - 1
+    while (n % k != 0)
+        k--
+    return k
 
 }
 
@@ -177,13 +180,12 @@ fun collatzSteps(x: Int): Int {
     var ch = 0
     var k = x
     while (k != 1) {
-        if (k % 2 == 0) {
+        if (k % 2 == 0)
             k /= 2
-            ch++
-        } else {
+        else
             k = 3 * k + 1
-            ch++
-        }
+        ch++
+
     }
     return ch
 }
@@ -214,19 +216,13 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun revert(n: Int): Int {
-    var z = 0
-    var ch = n
-    var N = n
-    var h = 0
-    while (ch != 0) {
-        ch /= 10
-        z++
+    var n1 = n
+    var ch = 0
+    while (n1 != 0) {
+        ch = ch * 10 + n1 % 10
+        n1 /= 10
     }
-    for (i in z downTo 1) {
-        h = (N % 10 * Math.pow(10.0, i.toDouble()) + h).toInt()
-        N /= 10
-    }
-    return h / 10
+    return ch
 }
 
 /**
@@ -238,7 +234,7 @@ fun revert(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = TODO()
+fun isPalindrome(n: Int): Boolean = (n == revert(n))
 
 /**
  * Средняя

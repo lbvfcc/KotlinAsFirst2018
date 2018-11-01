@@ -5,6 +5,7 @@ package lesson2.task2
 import lesson1.task1.sqr
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.math.sqrt
 
 /**
  * Пример
@@ -43,23 +44,21 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
  * Дан номер месяца (от 1 до 12 включительно) и год (положительный).
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
-fun daysInMonth(month: Int, year: Int): Int {
-    return if (month == 2 && ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)) 29 else when (month) {
-        1 -> 31
-        2 -> 28
-        3 -> 31
-        4 -> 30
-        5 -> 31
-        6 -> 30
-        7 -> 31
-        8 -> 31
-        9 -> 30
-        10 -> 31
-        11 -> 30
-        else -> 31
-
-    }
-}
+fun daysInMonth(month: Int, year: Int): Int =
+        when (month) {
+            1 -> 31
+            2 -> if (month == 2 && ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)) 29 else 28
+            3 -> 31
+            4 -> 30
+            5 -> 31
+            6 -> 30
+            7 -> 31
+            8 -> 31
+            9 -> 30
+            10 -> 31
+            11 -> 30
+            else -> 31
+        }
 
 /**
  * Средняя
@@ -69,7 +68,10 @@ fun daysInMonth(month: Int, year: Int): Int {
  * Вернуть true, если утверждение верно
  */
 fun circleInside(x1: Double, y1: Double, r1: Double,
-                 x2: Double, y2: Double, r2: Double): Boolean = TODO()
+                 x2: Double, y2: Double, r2: Double): Boolean {
+    val dl = sqrt (Math.pow(y2 - y1, 2.0) + Math.pow(x2 - x1, 2.0))
+    return r2 >= dl + r1
+}
 
 /**
  * Средняя

@@ -121,15 +121,13 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
  */
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
-                          bishopX: Int, bishopY: Int): Int {
-    val ch = Math.abs((kingY - bishopY) / (kingX - bishopX))
-    return when {
-        (kingX != rookX && ch != 1 && kingY != rookY) || kingX - bishopX == 0 -> 0
-        (kingY == rookY || kingX == rookX) && ch != 1 -> 1
-        ch == 1 && (kingY != rookY && kingX != rookX) -> 2
-        else -> 3
-    }
+                          bishopX: Int, bishopY: Int): Int = when {
+    kingX != rookX && kingY != rookY && abs(kingX - bishopX) != abs(kingY - bishopY) -> 0
+    (kingX == rookX && kingY != rookY || kingX != rookX && kingY == rookY) && abs(kingX - bishopX) != abs(kingY - bishopY) -> 1
+    kingX != rookX && kingY != rookY && abs(kingX - bishopX) == abs(kingY - bishopY) -> 2
+    else -> 3
 }
+
 
 /**
  * Простая

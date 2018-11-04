@@ -5,6 +5,7 @@ package lesson2.task1
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
 import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sqrt
 
 /**
@@ -66,8 +67,8 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  */
 fun ageDescription(age: Int): String =
         if (age in 11..14 || age in 111..114 || age % 10 in 5..9 || age % 10 == 0) "$age лет"
-        else if (age % 10 == 1) "$age год" else
-            "$age года"
+        else if (age % 10 == 1) "$age год"
+        else "$age года"
 
 
 /**
@@ -85,8 +86,8 @@ fun timeForHalfWay(t1: Double, v1: Double,
     val s3 = t3 * v3
     val sp = (s1 + s2 + s3) / 2
     return if (sp <= s1) sp / v1
-    else if (sp > s1 && sp <= s1 + s2) t1 + (sp - s1) / v2 else
-        t1 + t2 + (sp - s1 - s2) / v3
+    else if (sp > s1 && sp <= s1 + s2) t1 + (sp - s1) / v2
+    else t1 + t2 + (sp - s1 - s2) / v3
 }
 
 /**
@@ -162,4 +163,8 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+    val ch1 = max(a, c)
+    val ch2 = min(b, d)
+    return max(-1, ch2 - ch1)
+}

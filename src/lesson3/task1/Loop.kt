@@ -4,6 +4,7 @@ package lesson3.task1
 
 import lesson1.task1.sqr
 import kotlin.math.abs
+import kotlin.math.min
 import kotlin.math.sqrt
 
 /**
@@ -110,8 +111,8 @@ fun lcm(m: Int, n: Int): Int {
     var y = n
     val pr = m * n
     while (x != y)
-        if (x > y) x -= y else
-            y -= x
+        if (x > y) x -= y
+        else y -= x
     return pr / x
 }
 
@@ -148,7 +149,15 @@ fun maxDivisor(n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean {
+    var ch = 0
+    for (i in 1..n)
+        if (n % i == 0 && m % i == 0) ch = i
+    return ch == 1
+
+
+}
+
 
 /**
  * Простая
@@ -157,7 +166,8 @@ fun isCoPrime(m: Int, n: Int): Boolean = TODO()
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
+fun squareBetweenExists(m: Int, n: Int): Boolean =
+        Math.floor(sqrt(n.toDouble())).toInt() >= Math.ceil(sqrt(m.toDouble())).toInt()
 
 
 /**
@@ -244,7 +254,16 @@ fun isPalindrome(n: Int): Boolean = (n == revert(n))
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun hasDifferentDigits(n: Int): Boolean = TODO()
+fun hasDifferentDigits(n: Int): Boolean {
+    var number = n
+    val ch = n % 10
+    while (number >= 1) {
+        if ((number % 10) != ch)
+            return true
+        number /= 10
+    }
+    return false
+}
 
 /**
  * Сложная
@@ -255,7 +274,18 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var kv = 0
+    var num = 1
+    var nch = 0
+    while (nch < n) {
+        kv = sqr(num)
+        nch += digitNumber(kv)
+        num++
+    }
+
+    return kv / Math.pow(10.0, nch - n.toDouble()).toInt() % 10
+}
 
 /**
  * Сложная
@@ -267,3 +297,4 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun fibSequenceDigit(n: Int): Int = TODO()
+

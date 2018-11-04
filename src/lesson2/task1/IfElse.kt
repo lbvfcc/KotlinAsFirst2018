@@ -122,49 +122,47 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int {
-    val ist = (kingY == rookY) || (kingX == rookX)
-    val ist2 = abs(kingY - bishopY) == abs(kingX - bishopX)
+    val a = Math.abs(kingY - bishopY) / (kingX - bishopX)
     return when {
-        ist -> 1
-        ist2 -> 2
-        ist && ist2 -> 3
-        else -> 0
+        kingX != rookX && a != 1 && kingY != rookY -> 0
+        (kingY == rookY || kingX == rookX) && a != 1 -> 1
+        a == 1 && (kingY != rookY && kingX != rookX) -> 2
+        else -> 3
     }
 }
 
+    /**
+     * Простая
+     *
+     * Треугольник задан длинами своих сторон a, b, c.
+     * Проверить, является ли данный треугольник остроугольным (вернуть 0),
+     * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
+     * Если такой треугольник не существует, вернуть -1.
+     */
+    fun triangleKind(a: Double, b: Double, c: Double): Int {
+        val max = maxOf(a, b, c)
+        val min = minOf(a, b, c)
+        val last = a * b * c / (max * min)
+        return if (max < min + last)
+            when {
+                sqr(max) < sqr(min) + sqr(last) -> 0
+                sqr(max) > sqr(min) + sqr(last) -> 2
+                else -> 1
+            }
+        else -1
 
-/**
- * Простая
- *
- * Треугольник задан длинами своих сторон a, b, c.
- * Проверить, является ли данный треугольник остроугольным (вернуть 0),
- * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
- * Если такой треугольник не существует, вернуть -1.
- */
-fun triangleKind(a: Double, b: Double, c: Double): Int {
-    val max = maxOf(a, b, c)
-    val min = minOf(a, b, c)
-    val last = a * b * c / (max * min)
-    return if (max < min + last)
-        when {
-            sqr(max) < sqr(min) + sqr(last) -> 0
-            sqr(max) > sqr(min) + sqr(last) -> 2
-            else -> 1
-        }
-    else -1
+    }
 
-}
-
-/**
- * Средняя
- *
- * Даны четыре точки на одной прямой: A, B, C и D.
- * Координаты точек a, b, c, d соответственно, b >= a, d >= c.
- * Найти длину пересечения отрезков AB и CD.
- * Если пересечения нет, вернуть -1.
- */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    val ch1 = max(a, c)
-    val ch2 = min(b, d)
-    return max(ch2 - ch1, -1)
-}
+    /**
+     * Средняя
+     *
+     * Даны четыре точки на одной прямой: A, B, C и D.
+     * Координаты точек a, b, c, d соответственно, b >= a, d >= c.
+     * Найти длину пересечения отрезков AB и CD.
+     * Если пересечения нет, вернуть -1.
+     */
+    fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+        val ch1 = max(a, c)
+        val ch2 = min(b, d)
+        return max(ch2 - ch1, -1)
+    }

@@ -4,6 +4,7 @@ package lesson2.task1
 
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sqrt
@@ -66,8 +67,8 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int): String =
-        if (age in 11..14 || age in 111..114 || age % 10 in 5..9 || age % 10 == 0) "$age лет"
-        else if (age % 10 == 1) "$age год"
+        if (age % 10 == 1) "$age год"
+        else if (age in 11..14 || age in 111..114 || age % 10 in 5..9 || age % 10 == 0) "$age лет"
         else "$age года"
 
 
@@ -84,10 +85,10 @@ fun timeForHalfWay(t1: Double, v1: Double,
     val s1 = t1 * v1
     val s2 = t2 * v2
     val s3 = t3 * v3
-    val sp = (s1 + s2 + s3) / 2
-    return if (sp <= s1) sp / v1
-    else if (sp > s1 && sp <= s1 + s2) t1 + (sp - s1) / v2
-    else t1 + t2 + (sp - s1 - s2) / v3
+    val spol = (s1 + s2 + s3) / 2
+    return if (spol <= s1) spol / v1
+    else if (spol > s1 && spol <= s1 + s2) t1 + (spol - s1) / v2
+    else t1 + t2 + (spol - s1 - s2) / v3
 }
 
 /**
@@ -108,7 +109,6 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
     else -> 3
 }
 
-
 /**
  * Простая
  *
@@ -122,13 +122,13 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int {
-    val c = Math.abs((kingY - bishopY) / (kingX - bishopX))
+    val ist = (kingY == rookY) || (kingX == rookX)
+    val ist2 = abs(kingY - bishopY) == abs(kingX - bishopX)
     return when {
-        kingX != rookX && kingY != rookY && c != 1 -> 0
-        c == 1 && (kingX != rookX && kingY != rookY) -> 2
-        (kingX == rookX || kingY == rookY) && (c != 1) -> 1
-
-        else -> 3
+        ist -> 1
+        ist2 -> 2
+        ist && ist2 -> 3
+        else -> 0
     }
 }
 
@@ -166,5 +166,5 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
     val ch1 = max(a, c)
     val ch2 = min(b, d)
-    return max(-1, ch2 - ch1)
+    return max(ch2 - ch1, -1)
 }

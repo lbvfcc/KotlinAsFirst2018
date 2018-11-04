@@ -2,6 +2,7 @@
 
 package lesson3.task1
 
+import kotlinx.html.InputType
 import lesson1.task1.sqr
 import kotlin.math.abs
 import kotlin.math.min
@@ -107,8 +108,8 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var x = m
     var y = n
+    var x = m
     val pr = m * n
     while (x != y)
         if (x > y) x -= y
@@ -152,7 +153,7 @@ fun maxDivisor(n: Int): Int {
 fun isCoPrime(m: Int, n: Int): Boolean {
     var ch = 0
     for (i in 1..n)
-        if (n % i == 0 && m % i == 0) ch = i
+        if (m % i == 0 && n % i == 0) ch = i
     return ch == 1
 
 
@@ -167,7 +168,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean =
-        Math.floor(sqrt(n.toDouble())).toInt() >= Math.ceil(sqrt(m.toDouble())).toInt()
+        Math.ceil(sqrt(m.toDouble())).toInt() <= Math.floor(sqrt(n.toDouble())).toInt()
 
 
 /**
@@ -255,12 +256,12 @@ fun isPalindrome(n: Int): Boolean = (n == revert(n))
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun hasDifferentDigits(n: Int): Boolean {
-    var number = n
+    var num = n
     val ch = n % 10
-    while (number >= 1) {
-        if ((number % 10) != ch)
+    while (num >= 1) {
+        if ((num % 10) != ch)
             return true
-        number /= 10
+        num /= 10
     }
     return false
 }
@@ -275,8 +276,8 @@ fun hasDifferentDigits(n: Int): Boolean {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun squareSequenceDigit(n: Int): Int {
-    var kv = 0
     var num = 1
+    var kv = 0
     var nch = 0
     while (nch < n) {
         kv = sqr(num)

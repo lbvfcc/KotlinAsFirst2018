@@ -237,7 +237,8 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
 fun convert(n: Int, base: Int): List<Int> {
     val l = mutableListOf<Int>()
     var ch = n
-    while (ch > 0) {
+    if (ch == 0) l.add(0)
+    else while (ch > 0) {
         l.add(ch % base)
         ch /= base
     }
@@ -256,7 +257,8 @@ fun convert(n: Int, base: Int): List<Int> {
 fun convertToString(n: Int, base: Int): String {
     var ch = n
     var str = ""
-    while (ch > 0) {
+    if (ch == 0) str = "0"
+    else while (ch > 0) {
         val sn = ch % base
         str += if (sn < 10) sn.toString() else ('a' + (sn - 10))
         ch /= base
@@ -306,7 +308,7 @@ fun decimalFromString(str: String, base: Int): Int {
  * Сложная
  *
  * Перевести натуральное число n > 0 в римскую систему.
- * Римские цифры: 1 = I, 4 = IV, 5 = V, 9 = IX, 10 = X, 40 = XL, 50 = L,
+ * Римские цифры: 1 = I, 4 = IV, 5 = V, 9 = IX, 10 = X, 40 = XL, 50 = L,s
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */

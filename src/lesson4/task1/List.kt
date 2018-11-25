@@ -4,8 +4,10 @@ package lesson4.task1
 
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
+import lesson3.task1.maxDivisor
 import lesson3.task1.minDivisor
 import lesson5.task1.whoAreInBoth
+import java.io.File.separator
 import kotlin.math.sqrt
 
 /**
@@ -119,7 +121,7 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * Модуль пустого вектора считать равным 0.0.
  */
 fun abs(v: List<Double>): Double {
-    val ve = v.toDoubleArray()
+    val ve = v.toMutableList()
     for (i in 0 until ve.size)
         ve[i] = sqr(ve[i])
     return sqrt(ve.sum())
@@ -146,10 +148,8 @@ fun mean(list: List<Double>): Double =
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
     val sum = list.sum()
-    if (list.isEmpty()) return list
-    else
-        for (i in 0 until list.size)
-            list[i] -= (sum / list.size)
+    for (i in 0 until list.size)
+        list[i] -= (sum / list.size)
     return list
 }
 
@@ -208,6 +208,7 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
  * Результат разложения вернуть в виде списка множителей, например 75 -> (3, 5, 5).
  * Множители в списке должны располагаться по возрастанию.
  */
+
 fun factorize(n: Int): List<Int> {
     var ch = n
     val ml = mutableListOf<Int>()
@@ -217,6 +218,8 @@ fun factorize(n: Int): List<Int> {
     }
     return ml.sorted()
 }
+
+
 
 /**
  * Сложная
@@ -255,16 +258,15 @@ fun convert(n: Int, base: Int): List<Int> {
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
 fun convertToString(n: Int, base: Int): String {
-    var ch = n
-    var str = ""
-    if (ch == 0) str = "0"
-    else while (ch > 0) {
-        val sn = ch % base
-        str += if (sn < 10) sn.toString() else ('a' + (sn - 10))
-        ch /= base
-    }
-    return str.reversed()
+    var otv = ""
+    val bukvi = "abcdefghijklmnopqrstuvwxyz"
+    for (element in convert(n, base))
+        otv += if (element > 9) bukvi[element - 10]
+        else element
+    return otv
+
 }
+
 
 /**
  * Средняя
@@ -275,12 +277,12 @@ fun convertToString(n: Int, base: Int): String {
  */
 fun decimal(digits: List<Int>, base: Int): Int {
     var ch10 = 0
-    var st = 1
-    digits.reversed().forEach {
-        ch10 += it * st
-        st *= base
+    var mn = 1
+    for (element in digits.reversed()) {
+        ch10 += element * mn
+        mn *= base
     }
-    return ch10
+return ch10
 }
 
 
@@ -294,14 +296,13 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * Например: str = "13c", base = 14 -> 250
  */
 fun decimalFromString(str: String, base: Int): Int {
-    var zn = 1
-    var otv = 0
-    str.reversed().forEach {
-        val sign = if (it <= '9') it - '0' else (it.toLowerCase() - 'a' + 10)
-        otv += sign * zn
-        zn *= base
+    val otv = mutableListOf<Int>()
+    for (char in str) {
+        otv.add(if (char in '0'..'9') char - '0'
+        else char - 'a' + 10
+        )
     }
-    return otv
+    return decimal(otv, base)
 }
 
 /**
@@ -313,16 +314,16 @@ fun decimalFromString(str: String, base: Int): Int {
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
 fun roman(n: Int): String {
-    val rimc = mapOf(1000 to "M", 900 to "CM", 500 to "D", 400 to "CD", 100 to "C",
+    val rc = mapOf(1000 to "M", 900 to "CM", 500 to "D", 400 to "CD", 100 to "C",
             90 to "XC", 50 to "L", 40 to "XL", 10 to "X", 9 to "IX", 5 to "V", 4 to "IV", 1 to "I")
     var ch = n
     var otv = ""
-    for ((arab, rim) in rimc)
+    for ((arab, rim) in rc)
         while (ch >= arab) {
             otv += rim
             ch -= arab
         }
-return otv
+    return otv
 }
 
 /**

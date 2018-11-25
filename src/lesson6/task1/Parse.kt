@@ -51,12 +51,10 @@ fun main(args: Array<String>) {
         val seconds = timeStrToSeconds(line)
         if (seconds == -1) {
             println("Введённая строка $line не соответствует формату ЧЧ:ММ:СС")
-        }
-        else {
+        } else {
             println("Прошло секунд с начала суток: $seconds")
         }
-    }
-    else {
+    } else {
         println("Достигнут <конец файла> в процессе чтения строки. Программа прервана")
     }
 }
@@ -77,13 +75,17 @@ val months = listOf("января", "февраля", "марта", "апрел�
         "октября", "ноября", "декабря")
 
 fun dateStrToDigit(str: String): String {
-    val otv = str.split(" ")
-    if (otv[1] !in months || otv.size != 3) return ""
-    val day = otv[0].toInt()
-    val month = months.indexOf(otv[1]) + 1
-    val year = otv[2].toInt()
-    if (month !in 1..12 || day !in 1..daysInMonth(month, year)) return ""
-    return String.format("%02d.%02d.%01d", day, month, year)
+    return try {
+        val otv = str.split(" ")
+        if (otv.size != 3) throw Exception()
+        val day = otv[0].toInt()
+        val month = months.indexOf(otv[1]) + 1
+        val year = otv[2].toInt()
+        if (month !in 1..12 || day !in 1..daysInMonth(month, year)) throw Exception()
+        return String.format("%02d.%02d.%01d", day, month, year)
+    } catch (o: Exception) {
+        ""
+    }
 
 }
 
@@ -97,7 +99,20 @@ fun dateStrToDigit(str: String): String {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+
+    return try {
+        val otv = digital.split(".")
+        if (otv.size != 3) throw Exception()
+        val day = otv[0].toInt()
+        val month = otv[1].toInt()
+        val year = otv[2].toInt()
+        if (day !in 1..daysInMonth(otv[1].toInt(), year) || month !in 1..12) throw Exception()
+        return String.format("%d %s %d", day, months[month - 1], year)
+    } catch (o: Exception) {
+        ""
+    }
+}
 
 /**
  * Средняя

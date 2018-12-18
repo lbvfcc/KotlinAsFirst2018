@@ -3,6 +3,7 @@
 package lesson6.task1
 
 import lesson2.task2.daysInMonth
+import kotlin.math.exp
 
 /**
  * Пример
@@ -161,7 +162,14 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    var sum = expression.replace(" ", "")
+    if (Regex("""\d+(?:[\s]*[-+][\s]*\d+)*""").matches(expression))
+        return sum.split((Regex("""(?=[-+])"""))).map { it.toInt() }.sum()
+    else
+        throw IllegalArgumentException()
+}
+
 
 /**
  * Сложная
@@ -172,7 +180,16 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    val slova = str.toLowerCase().split(" ")
+    var resInd = -1
+    for (i in 0 until slova.size - 1) {
+        if (slova[i + 1] == slova[i]) return resInd + 1
+        else resInd += slova[i].length + 1
+    }
+    return resInd
+}
+
 
 /**
  * Сложная
